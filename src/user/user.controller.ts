@@ -1,22 +1,41 @@
-import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { UserService } from './user.service';
+import { UserCreateDto } from './dto/user.dto';
 
 @ApiTags('User')
 @Controller('user')
 export class UserController {
-  constructor() {}
+  constructor(private readonly userService: UserService) {}
 
   @Get('list')
   async getUserList() {
-    return 'List';
+    return this.userService.getAllUsers();
   }
 
-  @Post()
-  async createUserAccount() {
-    return 'New User';
+  @Post('account/create')
+  async createUserAccount(@Body() body: UserCreateDto) {
+    return this.userService.createUser(body);
   }
-  @Delete('userId')
+  @Post('account/:userId/animal')
+  async addAnimalToUser() {
+    return 'New Animal';
+  }
+  @Delete(':userId')
   async deleteUserAccount() {}
   @Patch(':userId')
   async updateUserProfile() {}
+  @Get(':userId')
+  async getUserProfile(@Param('userId') id: string) {
+    return this.userService.getOneUserAccount(id);
+  }
 }
