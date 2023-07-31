@@ -8,6 +8,7 @@ import { AnimalModule } from './animal/animal.module';
 import { UserService } from './user/user.service';
 import { PostgresqlConfigModule } from './config/database/config.module';
 import { TypeOrmConfiguration } from './config/database/type-orm-configuration';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,8 +16,9 @@ import { TypeOrmConfiguration } from './config/database/type-orm-configuration';
     UserModule,
     AnimalModule,
     PostgresqlConfigModule,
+    AuthModule,
   ],
   controllers: [AppController, AnimalController],
-  providers: [AppService, UserService],
+  providers: [AppService],
 })
 export class AppModule {}
