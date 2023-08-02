@@ -1,27 +1,26 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Animal } from '../animal/animal.entity';
-import { OneToMany } from 'typeorm';
+
+import { ManyToOne, OneToOne, JoinColumn } from 'typeorm';
+import { User } from '../user/user.entity';
 
 @Entity()
-export class User {
+export class Animal {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'varchar', nullable: false })
-  userName: string;
+  name: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
-  email: string;
+  class: string;
 
   @Column({ type: 'boolean', default: true })
-  isActive: boolean;
+  type: boolean;
 
   @Column({ type: 'int', nullable: true })
   age: number;
 
-  @Column({ type: 'varchar', nullable: false })
-  password: string;
-
-  @OneToMany(() => Animal, (animal) => animal.user, { cascade: true })
-  animals: Animal[];
+  @OneToOne(() => User, (user) => user.animals)
+  @JoinColumn()
+  user: User;
 }
